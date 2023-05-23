@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="HospitalId" />
+          </Key>
+          <Property Name="HospitalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HospitalName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HospitalSpeciality" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HospitalAddress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HospialCity" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HospitalContactNumber" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Function Name="SP_Add_Hospital" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="HospitalName" Type="varchar" Mode="In" />
+          <Parameter Name="HospitalSpeciality" Type="varchar" Mode="In" />
+          <Parameter Name="HospitalAddress" Type="varchar" Mode="In" />
+          <Parameter Name="HospialCity" Type="varchar" Mode="In" />
+          <Parameter Name="HospitalContactNumber" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_Delete_Hospital" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="HospitalId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Get_All_Hospital" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_Get_Hospital_By_Id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="HospitalId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Update_Hospital" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="HospitalId" Type="int" Mode="In" />
+          <Parameter Name="HospitalName" Type="varchar" Mode="In" />
+          <Parameter Name="HospitalSpeciality" Type="varchar" Mode="In" />
+          <Parameter Name="HospitalAddress" Type="varchar" Mode="In" />
+          <Parameter Name="HospialCity" Type="varchar" Mode="In" />
+          <Parameter Name="HospitalContactNumber" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="TestModelStoreContainer">
+          <EntitySet Name="Hospital" EntityType="Self.Hospital" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="HospitalId" />
+          </Key>
+          <Property Name="HospitalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HospitalName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HospitalSpeciality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HospitalAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HospialCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HospitalContactNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="TestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Hospitals" EntityType="Self.Hospital" />
+          <FunctionImport Name="SP_Add_Hospital">
+            <Parameter Name="HospitalName" Mode="In" Type="String" />
+            <Parameter Name="HospitalSpeciality" Mode="In" Type="String" />
+            <Parameter Name="HospitalAddress" Mode="In" Type="String" />
+            <Parameter Name="HospialCity" Mode="In" Type="String" />
+            <Parameter Name="HospitalContactNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Delete_Hospital">
+          <Parameter Name="HospitalId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Get_All_Hospital" ReturnType="Collection(TestModel.SP_Get_All_Hospital_Result)" />
+          <FunctionImport Name="SP_Get_Hospital_By_Id" ReturnType="Collection(TestModel.SP_Get_Hospital_By_Id_Result)">
+          <Parameter Name="HospitalId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Update_Hospital">
+            <Parameter Name="HospitalId" Mode="In" Type="Int32" />
+            <Parameter Name="HospitalName" Mode="In" Type="String" />
+            <Parameter Name="HospitalSpeciality" Mode="In" Type="String" />
+            <Parameter Name="HospitalAddress" Mode="In" Type="String" />
+            <Parameter Name="HospialCity" Mode="In" Type="String" />
+            <Parameter Name="HospitalContactNumber" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_Get_All_Hospital_Result">
+          <Property Type="Int32" Name="HospitalId" Nullable="false" />
+          <Property Type="String" Name="HospitalName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="HospitalSpeciality" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="HospitalAddress" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="HospialCity" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="HospitalContactNumber" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SP_Get_Hospital_By_Id_Result">
+          <Property Type="Int32" Name="HospitalId" Nullable="false" />
+          <Property Type="String" Name="HospitalName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="HospitalSpeciality" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="HospitalAddress" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="HospialCity" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="HospitalContactNumber" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestModelStoreContainer" CdmEntityContainer="TestEntities">
+          <EntitySetMapping Name="Hospitals">
+            <EntityTypeMapping TypeName="TestModel.Hospital">
+              <MappingFragment StoreEntitySet="Hospital">
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
+                <ScalarProperty Name="HospitalSpeciality" ColumnName="HospitalSpeciality" />
+                <ScalarProperty Name="HospitalAddress" ColumnName="HospitalAddress" />
+                <ScalarProperty Name="HospialCity" ColumnName="HospialCity" />
+                <ScalarProperty Name="HospitalContactNumber" ColumnName="HospitalContactNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_Add_Hospital" FunctionName="TestModel.Store.SP_Add_Hospital" />
+          <FunctionImportMapping FunctionImportName="SP_Delete_Hospital" FunctionName="TestModel.Store.SP_Delete_Hospital" />
+          <FunctionImportMapping FunctionImportName="SP_Get_All_Hospital" FunctionName="TestModel.Store.SP_Get_All_Hospital">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestModel.SP_Get_All_Hospital_Result">
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
+                <ScalarProperty Name="HospitalSpeciality" ColumnName="HospitalSpeciality" />
+                <ScalarProperty Name="HospitalAddress" ColumnName="HospitalAddress" />
+                <ScalarProperty Name="HospialCity" ColumnName="HospialCity" />
+                <ScalarProperty Name="HospitalContactNumber" ColumnName="HospitalContactNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Get_Hospital_By_Id" FunctionName="TestModel.Store.SP_Get_Hospital_By_Id">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestModel.SP_Get_Hospital_By_Id_Result">
+                <ScalarProperty Name="HospitalId" ColumnName="HospitalId" />
+                <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
+                <ScalarProperty Name="HospitalSpeciality" ColumnName="HospitalSpeciality" />
+                <ScalarProperty Name="HospitalAddress" ColumnName="HospitalAddress" />
+                <ScalarProperty Name="HospialCity" ColumnName="HospialCity" />
+                <ScalarProperty Name="HospitalContactNumber" ColumnName="HospitalContactNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Update_Hospital" FunctionName="TestModel.Store.SP_Update_Hospital" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

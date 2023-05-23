@@ -1,0 +1,85 @@
+﻿@model IEnumerable<HospitalManagement.Hospital>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <title>Index</title>
+</head>
+<style>
+    .table {
+        width: 100vw;
+        height: auto;
+        /*border: solid red;*/
+    }
+
+    .hello {
+        width: 90vw;
+        /*border: solid green;*/
+    }
+
+    .inner-table {
+        width: 90vw;
+        /*border: solid blue;*/
+    }
+</style>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table table-bordered">
+        <tr>
+            <th style="width:10%" class="hello">
+                @Html.DisplayNameFor(model => model.HospitalName)
+            </th>
+            <th style="width:10%" class="hello">
+                @Html.DisplayNameFor(model => model.HospitalSpeciality)
+            </th>
+            <th style="width:10%" class="hello">
+                @Html.DisplayNameFor(model => model.HospitalAddress)
+            </th>
+            <th style="width:10%" class="hello">
+                @Html.DisplayNameFor(model => model.HospialCity)
+            </th>
+            <th style="width:10%" class="hello">
+                @Html.DisplayNameFor(model => model.HospitalContactNumber)
+            </th>
+            <th style="width:10%" class="hello">
+                Action
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="width:10%" class="inner-table">
+                    @Html.DisplayFor(modelItem => item.HospitalName)
+                </td>
+                <td style="width:10%" class="inner-table">
+                    @Html.DisplayFor(modelItem => item.HospitalSpeciality)
+                </td>
+                <td style="width:10%" class="inner-table">
+                    @Html.DisplayFor(modelItem => item.HospitalAddress)
+                </td>
+                <td style="width:10%" class="inner-table">
+                    @Html.DisplayFor(modelItem => item.HospialCity)
+                </td>
+                <td style="width:10%" class="inner-table">
+                    @Html.DisplayFor(modelItem => item.HospitalContactNumber)
+                </td>
+                <td style="width:10%" class="inner-table">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.HospitalId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.HospitalId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.HospitalId })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>
