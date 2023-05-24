@@ -9,6 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <title>Delete</title>
 </head>
 <style>
@@ -40,25 +41,30 @@
     }
 
     .dl-horizontal {
-        width: 70vw;
-        height: 70vh;
+        width: 40vw;
+        height: 40vh;
         /*border: solid black;*/
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        position:relative;
-        margin-top:50px;
+        position: relative;
+        margin-top: 20px;
     }
 
     .ques-ans {
-        width: 20vw;
-        height: 10vh;
-        /*border: solid green;*/
+        /*border: solid blue;*/
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        position: relative;
-        margin-right: 500px;
+    }
+
+    .ques {
+        width: 15vw;
+        /*border: solid green;*/
+    }
+
+    .ans {
+        width: 20vw;
+        /*border: solid yellow;*/
     }
 </style>
 <body>
@@ -69,70 +75,73 @@
 
             </div>
             <div class="heading">
-                <h2>Hospital Management</h2>
+                Hospital Management
             </div>
         </div>
         <hr />
-        <h2>Are you sure you want to delete this?</h2>
+        <h2>Are you sure you want to delete this Hospital?</h2>
 
-        <dl class="dl-horizontal">
+        <div class="dl-horizontal">
             <div class="ques-ans">
-                <dt class="ques">
+                <div class="ques">
                     @Html.DisplayNameFor(model => model.HospitalName)
-                </dt>
+                </div>
 
-                <dd class="ans">
+                <div class="ans">
                     @Html.DisplayFor(model => model.HospitalName)
-                </dd>
+                </div>
             </div>
 
             <div class="ques-ans">
-                <dt class="ques">
+                <div class="ques">
                     @Html.DisplayNameFor(model => model.HospitalSpeciality)
-                </dt>
+                </div>
 
-                <dd class="ans">
+                <div class="ans">
                     @Html.DisplayFor(model => model.HospitalSpeciality)
-                </dd>
+                </div>
             </div>
 
             <div class="ques-ans">
-                <dt class="ques">
+                <div class="ques">
                     @Html.DisplayNameFor(model => model.HospitalAddress)
-                </dt>
+                </div>
 
-                <dd class="ans">
+                <div class="ans">
                     @Html.DisplayFor(model => model.HospitalAddress)
-                </dd>
+                </div>
             </div>
 
             <div class="ques-ans">
-                <dt class="ques">
+                <div class="ques">
                     @Html.DisplayNameFor(model => model.HospialCity)
-                </dt>
+                </div>
 
-                <dd class="ans">
+                <div class="ans">
                     @Html.DisplayFor(model => model.HospialCity)
-                </dd>
+                </div>
             </div>
             <div class="ques-ans">
-                <dt class="ques">
+                <div class="ques">
                     @Html.DisplayNameFor(model => model.HospitalContactNumber)
-                </dt>
+                </div>
 
-                <dd class="ans">
+                <div class="ans">
                     @Html.DisplayFor(model => model.HospitalContactNumber)
-                </dd>
+                </div>
             </div>
-        </dl>
+        </div>
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
+                <input type="submit" value="Delete" class="btn btn-default" style="position:relative; margin-left:200px"  />
             </div>
-            @Html.ActionLink("Back to List", "Index")
+            <br />
+            <br />
+
+            <button>@Html.ActionLink("Back to List", "Index")</button>
 
         }
     </div>

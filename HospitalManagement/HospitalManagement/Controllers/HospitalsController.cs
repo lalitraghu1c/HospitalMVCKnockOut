@@ -38,7 +38,8 @@ namespace HospitalManagement.Controllers
         // GET: Hospitals/Create
         public ActionResult Create()
         {
-            return View();
+            Hospital hospital = new Hospital(); // Instantiate a new Hospital object
+            return View(hospital);
         }
 
         // POST: Hospitals/Create
