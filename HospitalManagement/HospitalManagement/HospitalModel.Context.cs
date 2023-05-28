@@ -29,7 +29,7 @@ namespace HospitalManagement
     
         public virtual DbSet<Hospital> Hospitals { get; set; }
     
-        public virtual int SP_Add_Hospital(string hospitalName, string hospitalSpeciality, string hospitalAddress, string hospialCity, string hospitalContactNumber)
+        public virtual int SP_Add_Hospital(string hospitalName, string hospitalSpeciality, string hospitalAddress, string hospialCity, string hospitalContactNumber, string hospitalArea)
         {
             var hospitalNameParameter = hospitalName != null ?
                 new ObjectParameter("HospitalName", hospitalName) :
@@ -51,7 +51,11 @@ namespace HospitalManagement
                 new ObjectParameter("HospitalContactNumber", hospitalContactNumber) :
                 new ObjectParameter("HospitalContactNumber", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Add_Hospital", hospitalNameParameter, hospitalSpecialityParameter, hospitalAddressParameter, hospialCityParameter, hospitalContactNumberParameter);
+            var hospitalAreaParameter = hospitalArea != null ?
+                new ObjectParameter("HospitalArea", hospitalArea) :
+                new ObjectParameter("HospitalArea", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Add_Hospital", hospitalNameParameter, hospitalSpecialityParameter, hospitalAddressParameter, hospialCityParameter, hospitalContactNumberParameter, hospitalAreaParameter);
         }
     
         public virtual int SP_Delete_Hospital(Nullable<int> hospitalId)
@@ -77,7 +81,7 @@ namespace HospitalManagement
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Get_Hospital_By_Id_Result>("SP_Get_Hospital_By_Id", hospitalIdParameter);
         }
     
-        public virtual int SP_Update_Hospital(Nullable<int> hospitalId, string hospitalName, string hospitalSpeciality, string hospitalAddress, string hospialCity, string hospitalContactNumber)
+        public virtual int SP_Update_Hospital(Nullable<int> hospitalId, string hospitalName, string hospitalSpeciality, string hospitalAddress, string hospialCity, string hospitalContactNumber, Nullable<System.DateTime> hospitalArea)
         {
             var hospitalIdParameter = hospitalId.HasValue ?
                 new ObjectParameter("HospitalId", hospitalId) :
@@ -103,7 +107,11 @@ namespace HospitalManagement
                 new ObjectParameter("HospitalContactNumber", hospitalContactNumber) :
                 new ObjectParameter("HospitalContactNumber", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Update_Hospital", hospitalIdParameter, hospitalNameParameter, hospitalSpecialityParameter, hospitalAddressParameter, hospialCityParameter, hospitalContactNumberParameter);
+            var hospitalAreaParameter = hospitalArea.HasValue ?
+                new ObjectParameter("HospitalArea", hospitalArea) :
+                new ObjectParameter("HospitalArea", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Update_Hospital", hospitalIdParameter, hospitalNameParameter, hospitalSpecialityParameter, hospitalAddressParameter, hospialCityParameter, hospitalContactNumberParameter, hospitalAreaParameter);
         }
     }
 }

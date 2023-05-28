@@ -19,5 +19,6 @@ namespace HospitalManagement
         public string HospitalAddress { get; set; }
         public string HospialCity { get; set; }
         public string HospitalContactNumber { get; set; }
+        public string HospitalArea { get; set; }
     }
 }

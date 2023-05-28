@@ -5,66 +5,42 @@
 }
 
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-min.js"></script>
+    <script src="~/Scripts/knockout-3.5.1.js"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <title>Details</title>
-    <style>
-        * {
-            margin: 0 0 0;
-        }
-
-        .header {
-            width: 100vw;
-            height: 10vh;
-            display: flex;
-            flex-direction: row;
-            background-color: lightblue;
-        }
-
-        .logo {
-            width: 10vw;
-        }
-
-        .heading {
-            width: 85vw;
-            /*border: solid blue;*/
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            font-size: 40px;
-        }
-
-        .middle-container {
-            width: 40vw;
-            height: 40vh;
-            /*border: solid black;*/
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            position: relative;
-            margin-top: 50px;
-        }
-
-        .sep-container {
-            /*border: solid blue;*/
-            display: flex;
-            flex-direction: row;
-        }
-
-        .ques {
-            width: 15vw;
-            /*border: solid green;*/
-        }
-
-        .ans {
-            width: 20vw;
-            /*border: solid yellow;*/
-        }
-    </style>
 </head>
+<style>
+    * {
+        margin: 0 0 0;
+    }
+
+    .header {
+        width: 100vw;
+        height: 10vh;
+        /*border: solid red;*/
+        display: flex;
+        flex-direction: row;
+        background-color: lightblue;
+    }
+
+    .logo {
+        width: 10vw;
+        /*border: solid red;*/
+    }
+
+    .heading {
+        width: 85vw;
+        /*border: solid blue;*/
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-size: 40px;
+    }
+</style>
 <body>
     <div>
         <div class="header">
@@ -76,76 +52,109 @@
             </div>
         </div>
         <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Hospital Id
+            </dt>
+            <dd data-bind="text: HospitalId"></dd>
+            <dt>
+                Hospital Name
+            </dt>
+            <dd data-bind="text: HospitalName"></dd>
 
-        <div class="middle-container">
-            <div class="sep-container">
-                <div class="ques">
-                    Hospital Name
-                </div>
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospitalName)
-                </div>
-            </div>
-            <div class="sep-container">
+            <dt>
+                Hospital Speciality
+            </dt>
+            <dd data-bind="text: HospitalSpeciality"></dd>
 
-                <div class="ques">
-                    Hospital Speciality
-                </div>
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospitalSpeciality)
-                </div>
-            </div>
+            <dt>
+                Hospital Address
+            </dt>
+            <dd data-bind="text: HospitalAddress"></dd>
 
-            <div class="sep-container">
+            <dt>
+                Hospital City
+            </dt>
+            <dd data-bind="text: HospialCity"></dd>
 
-                <div class="ques">
-                    Hospital Address
-                </div>
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospitalAddress)
-                </div>
-            </div>
+            <dt>
+                Contact Number
+            </dt>
+            <dd data-bind="text: HospitalContactNumber"></dd>
 
-            <div class="sep-container">
-
-                <div class="ques">
-                    Hospital City
-                </div>
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospialCity)
-                </div>
-            </div>
-
-            <div class="sep-container">
-
-                <div class="ques">
-                    Hospital Contact Number
-                </div>
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospitalContactNumber)
-                </div>
-            </div>
-
-        </div>
-        <button style="position:relative; margin-left:200px">@Html.ActionLink("Edit", "Edit", new { id = Model.HospitalId }) </button>
+            <dt>
+                Hospital Area
+            </dt>
+            <dd data-bind="text: HospitalArea"></dd>
+        </dl>
     </div>
-    <br />
-    <br />
-    <button>@Html.ActionLink("Back to List", "Index")</button>
 
+    <button>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.HospitalId })
+    </button>
+    <button>
+        @Html.ActionLink("Back to List", "Index")
+    </button>
+    @{
+        var listData = ViewData["ListValue"] as List<HospitalManagement.Hospital>;
+    }
+
+    @if (listData.Count > 0)
+    {
+        <div class="row col-md-12">
+            <table class="table table-bordered">
+                <tbody>
+
+                    <tr>
+                        <th> HospitalId </th>
+                        <th> HospitalName </th>
+                        <th> HospitalSpeciality</th>
+                        <th> HospitalAddress</th>
+                        <th> HospialCity</th>
+                        <th> HospitalContactNumber</th>
+                        <th> HospitalArea</th>
+                        <th> Actions</th>
+                    </tr>
+                    @foreach (var item in ViewData["ListValue"] as List<HospitalManagement.Hospital>)
+                    {
+                        <tr>
+                            <td> @item.HospitalId</td>
+                            <td> @item.HospitalName</td>
+                            <td> @item.HospitalSpeciality</td>
+                            <td> @item.HospitalAddress</td>
+                            <td> @item.HospialCity</td>
+                            <td> @item.HospitalContactNumber</td>
+                            <td> @item.HospitalArea</td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.HospitalId }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.HospitalId }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.HospitalId })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
     <script>
-        function ViewModel() {
+        function HospitalViewModel() {
             var self = this;
-            self.HospitalId = ko.observable('@Model.HospitalId');
-            self.HospitalName = ko.observable('@Model.HospitalName');
-            self.HospitalSpeciality = ko.observable('@Model.HospitalSpeciality');
-            self.HospitalAddress = ko.observable('@Model.HospitalAddress');
-            self.HospitalCity = ko.observable('@Model.HospialCity');
-            self.HospitalContactNumber = ko.observable('@Model.HospitalContactNumber');
+
+            // Observable properties
+            self.HospitalId = ko.observable("@Model.HospitalId");
+            self.HospitalName = ko.observable("@Model.HospitalName");
+            self.HospitalSpeciality = ko.observable("@Model.HospitalSpeciality");
+            self.HospitalAddress = ko.observable("@Model.HospitalAddress");
+            self.HospialCity = ko.observable("@Model.HospialCity");
+            self.HospitalContactNumber = ko.observable("@Model.HospitalContactNumber");
+            self.HospitalArea = ko.observable("@Model.HospitalArea");
+
+            // Apply bindings
+            ko.applyBindings(self);
         }
 
-        var viewModel = new ViewModel();
-        ko.applyBindings(viewModel);
+        // Create view model instance
+        var viewModel = new HospitalViewModel();
     </script>
 </body>
 </html>

@@ -16,7 +16,7 @@ namespace HospitalManagement
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Hospitals", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Hospitals", action = "Create", id = UrlParameter.Optional }
             );
         }
     }

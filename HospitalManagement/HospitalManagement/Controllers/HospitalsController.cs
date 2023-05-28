@@ -32,14 +32,16 @@ namespace HospitalManagement.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["ListValue"] = db.Hospitals.ToList();
+
             return View(hospital);
         }
 
         // GET: Hospitals/Create
         public ActionResult Create()
         {
-            Hospital hospital = new Hospital(); // Instantiate a new Hospital object
-            return View(hospital);
+            ViewData["ListValue"] = db.Hospitals.ToList();
+            return View();
         }
 
         // POST: Hospitals/Create
@@ -47,13 +49,15 @@ namespace HospitalManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "HospitalId,HospitalName,HospitalSpeciality,HospitalAddress,HospialCity,HospitalContactNumber")] Hospital hospital)
+        public ActionResult Create([Bind(Include = "HospitalId,HospitalName,HospitalSpeciality,HospitalAddress,HospialCity,HospitalContactNumber,HospitalArea")] Hospital hospital)
         {
             if (ModelState.IsValid)
             {
                 db.Hospitals.Add(hospital);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewData["ListValue"] = db.Hospitals.ToList();
+
+                return RedirectToAction("Create");
             }
 
             return View(hospital);
@@ -71,6 +75,8 @@ namespace HospitalManagement.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["ListValue"] = db.Hospitals.ToList();
+
             return View(hospital);
         }
 
@@ -79,13 +85,15 @@ namespace HospitalManagement.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "HospitalId,HospitalName,HospitalSpeciality,HospitalAddress,HospialCity,HospitalContactNumber")] Hospital hospital)
+        public ActionResult Edit([Bind(Include = "HospitalId,HospitalName,HospitalSpeciality,HospitalAddress,HospialCity,HospitalContactNumber,HospitalArea")] Hospital hospital)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(hospital).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewData["ListValue"] = db.Hospitals.ToList();
+
+                return RedirectToAction("Edit");
             }
             return View(hospital);
         }
@@ -102,6 +110,8 @@ namespace HospitalManagement.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["ListValue"] = db.Hospitals.ToList();
+
             return View(hospital);
         }
 

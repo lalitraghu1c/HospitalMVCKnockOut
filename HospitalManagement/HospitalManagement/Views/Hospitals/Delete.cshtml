@@ -1,14 +1,13 @@
 ﻿@model HospitalManagement.Hospital
-
 @{
     Layout = null;
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/knockout-3.5.1.js"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <title>Delete</title>
 </head>
@@ -39,111 +38,144 @@
         justify-content: center;
         font-size: 40px;
     }
-
-    .dl-horizontal {
-        width: 40vw;
-        height: 40vh;
-        /*border: solid black;*/
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        position: relative;
-        margin-top: 20px;
-    }
-
-    .ques-ans {
-        /*border: solid blue;*/
-        display: flex;
-        flex-direction: row;
-    }
-
-    .ques {
-        width: 15vw;
-        /*border: solid green;*/
-    }
-
-    .ans {
-        width: 20vw;
-        /*border: solid yellow;*/
-    }
 </style>
 <body>
     <div>
         <div class="header">
             <div class="logo">
                 <img style="width:100%; height:100%" src="https://t3.ftcdn.net/jpg/05/14/36/48/360_F_514364850_xLOQX6SOY2qcjAIcTowsi3xYvHmhmvs0.jpg" />
-
             </div>
             <div class="heading">
                 Hospital Management
             </div>
         </div>
         <hr />
-        <h2>Are you sure you want to delete this Hospital?</h2>
+        <h3>Are you sure you want to delete this?</h3>
 
-        <div class="dl-horizontal">
-            <div class="ques-ans">
-                <div class="ques">
-                    @Html.DisplayNameFor(model => model.HospitalName)
-                </div>
+        <dl class="dl-horizontal">
+            <dt>Hospital Name</dt>
+            <dd data-bind="text: HospitalName"></dd>
 
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospitalName)
-                </div>
-            </div>
+            <dt>Hospital Speciality</dt>
+            <dd data-bind="text: HospitalSpeciality"></dd>
 
-            <div class="ques-ans">
-                <div class="ques">
-                    @Html.DisplayNameFor(model => model.HospitalSpeciality)
-                </div>
+            <dt>Hospital Address</dt>
+            <dd data-bind="text: HospitalAddress"></dd>
 
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospitalSpeciality)
-                </div>
-            </div>
+            <dt>Hospital City</dt>
+            <dd data-bind="text: HospialCity"></dd>
 
-            <div class="ques-ans">
-                <div class="ques">
-                    @Html.DisplayNameFor(model => model.HospitalAddress)
-                </div>
+            <dt>Contact Number</dt>
+            <dd data-bind="text: HospitalContactNumber"></dd>
 
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospitalAddress)
-                </div>
-            </div>
-
-            <div class="ques-ans">
-                <div class="ques">
-                    @Html.DisplayNameFor(model => model.HospialCity)
-                </div>
-
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospialCity)
-                </div>
-            </div>
-            <div class="ques-ans">
-                <div class="ques">
-                    @Html.DisplayNameFor(model => model.HospitalContactNumber)
-                </div>
-
-                <div class="ans">
-                    @Html.DisplayFor(model => model.HospitalContactNumber)
-                </div>
-            </div>
-        </div>
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" style="position:relative; margin-left:200px"  />
-            </div>
-            <br />
-            <br />
-
-            <button>@Html.ActionLink("Back to List", "Index")</button>
-
-        }
+            <dt>Hospital Area</dt>
+            <dd data-bind="text: HospitalArea"></dd>
+        </dl>
     </div>
+    @using (Html.BeginForm("Delete", "Hospitals", new { id = Model.HospitalId }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="col-md-offset-2 col-md-10" style="width:20vw; position:relative; right:250px">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a href="@Url.Action("Index", "Hospitals")">Back to List</a>
+        </div>
+    }
+    @{
+        var listData = ViewData["ListValue"] as List<HospitalManagement.Hospital>;
+    }
+    <br />
+
+    @if (listData.Count > 0)
+    {
+        <br />
+        <br />
+        <div class="row col-md-12">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th> HospitalId</th>
+                        <th> HospitalName </th>
+                        <th> HospitalSpeciality</th>
+                        <th> HospitalAddress</th>
+                        <th> HospialCity</th>
+                        <th> HospitalContactNumber</th>
+                        <th> HospitalArea</th>
+                        <th> Actions</th>
+                    </tr>
+                    @foreach (var item in ViewData["ListValue"] as List<HospitalManagement.Hospital>)
+                    {
+                    <tr>
+                        <td> @item.HospitalId</td>
+                        <td> @item.HospitalName</td>
+                        <td> @item.HospitalSpeciality</td>
+                        <td> @item.HospitalAddress</td>
+                        <td> @item.HospialCity</td>
+                        <td> @item.HospitalContactNumber</td>
+                        <td> @item.HospitalArea</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.HospitalId }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.HospitalId }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.HospitalId })
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    <button>
+        @Html.ActionLink("Create New", "Create")
+    </button>
+    <script>
+        function HospitalViewModel() {
+            var self = this;
+
+            // Observable properties
+            self.HospitalName = ko.observable();
+            self.HospitalSpeciality = ko.observable();
+            self.HospitalAddress = ko.observable();
+            self.HospialCity = ko.observable();
+            self.HospitalContactNumber = ko.observable();
+            self.HospitalArea = ko.observable();
+
+            // Apply bindings
+            ko.applyBindings(self);
+        }
+
+        // Create view model instance
+        var viewModel = new HospitalViewModel();
+
+        // Set the values of observables from server-side model
+        viewModel.HospitalName("@Html.DisplayFor(model => model.HospitalName)");
+        viewModel.HospitalSpeciality("@Html.DisplayFor(model => model.HospitalSpeciality)");
+        viewModel.HospitalAddress("@Html.DisplayFor(model => model.HospitalAddress)");
+        viewModel.HospialCity("@Html.DisplayFor(model => model.HospialCity)");
+        viewModel.HospitalContactNumber("@Html.DisplayFor(model => model.HospitalContactNumber)");
+        viewModel.HospitalArea("@Html.DisplayFor(model => model.HospitalArea)");
+    </script>
+
+</body>
+</html>
+
+<script>
+    function HospitalViewModel() {
+        var self = this;
+
+        // Observable properties
+        self.HospitalName = ko.observable("@Html.Raw(Model.HospitalName)");
+        self.HospitalSpeciality = ko.observable("@Html.Raw(Model.HospitalSpeciality)");
+        self.HospitalAddress = ko.observable("@Html.Raw(Model.HospitalAddress)");
+        self.HospialCity = ko.observable("@Html.Raw(Model.HospialCity)");
+        self.HospitalContactNumber = ko.observable("@Html.Raw(Model.HospitalContactNumber)");
+        self.HospitalArea = ko.observable("@Html.Raw(Model.HospitalArea)");
+    }
+
+    // Create view model instance
+    var viewModel = new HospitalViewModel();
+
+    // Apply bindings
+    ko.applyBindings(viewModel);
+</script>
 </body>
 </html>
