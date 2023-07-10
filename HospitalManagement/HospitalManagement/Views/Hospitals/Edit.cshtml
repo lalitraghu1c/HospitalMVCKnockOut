@@ -1,16 +1,14 @@
-﻿@model HospitalManagement.Hospital
-
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <script src="~/Scripts/knockout-3.5.1.js"></script>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.1/knockout-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+
     <title>Edit</title>
 </head>
 <style>
@@ -21,7 +19,6 @@
     .header {
         width: 100vw;
         height: 10vh;
-        /*border: solid red;*/
         display: flex;
         flex-direction: row;
         background-color: lightblue;
@@ -29,12 +26,10 @@
 
     .logo {
         width: 10vw;
-        /*border: solid red;*/
     }
 
     .heading {
         width: 85vw;
-        /*border: solid blue;*/
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -42,140 +37,164 @@
     }
 </style>
 <body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <div class="header">
-            <div class="logo">
-                <img style="width:100%; height:100%" src="https://t3.ftcdn.net/jpg/05/14/36/48/360_F_514364850_xLOQX6SOY2qcjAIcTowsi3xYvHmhmvs0.jpg" />
-            </div>
-            <div class="heading">
-                Hospital Management
+    <div class="header">
+        <div class="logo">
+            <img style="width:100%; height:100%" src="https://t3.ftcdn.net/jpg/05/14/36/48/360_F_514364850_xLOQX6SOY2qcjAIcTowsi3xYvHmhmvs0.jpg" />
+        </div>
+        <div class="heading">
+            Hospital Management
+        </div>
+    </div>
+    <hr />
+    <div class="form-horizontal">
+        <input type="hidden" id="HospitalId" value="" />
+        <div class="form-group">
+            <label class="control-label col-md-2" for="HospitalName">Hospital Name:</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="HospitalName" name="HospitalName" value="" />
+                <span class="text-danger"></span>
             </div>
         </div>
-        <hr />
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.HospitalId)
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.HospitalName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.EditorFor(model => model.HospitalName, new { htmlAttributes = new { @class = "form-control", data_bind = "value: HospitalName" } })
-                    @Html.ValidationMessageFor(model => model.HospitalName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.HospitalSpeciality, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.HospitalSpeciality, new { @class = "form-control", data_bind = "value: HospitalSpeciality" })
-                    @Html.ValidationMessageFor(model => model.HospitalSpeciality, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.HospitalAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.EditorFor(model => model.HospitalAddress, new { htmlAttributes = new { @class = "form-control", data_bind = "value: HospitalAddress" } })
-                    @Html.ValidationMessageFor(model => model.HospitalAddress, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.HospialCity, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.EditorFor(model => model.HospialCity, new { htmlAttributes = new { @class = "form-control", data_bind = "value: HospialCity" } })
-                    @Html.ValidationMessageFor(model => model.HospialCity, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.HospitalContactNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.EditorFor(model => model.HospitalContactNumber, new { htmlAttributes = new { @class = "form-control", data_bind = "value: HospitalContactNumber" } })
-                    @Html.ValidationMessageFor(model => model.HospitalContactNumber, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.HospitalArea, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
-                    @Html.EditorFor(model => model.HospitalArea, new { htmlAttributes = new { @class = "form-control", data_bind = "value: HospitalArea" } })
-                    @Html.ValidationMessageFor(model => model.HospitalArea, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" value="Save" class="btn btn-default">Save</button>
-                    <button>@Html.ActionLink("Back to List", "Index")</button>
-                </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="HospitalSpeciality">Hospital Speciality:</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="HospitalSpeciality" name="HospitalSpeciality" value="" />
+                <span class="text-danger"></span>
             </div>
         </div>
-    }
 
-    @{
-        var listData = ViewData["ListValue"] as List<HospitalManagement.Hospital>;
-    }
-
-    @if (listData.Count > 0)
-    {
-        <div class="row col-md-12">
-            <table class="table table-bordered">
-                <tbody>
-
-                    <tr>
-                        <th> HospitalId </th>
-                        <th> HospitalName </th>
-                        <th> HospitalSpeciality</th>
-                        <th> HospitalAddress</th>
-                        <th> HospialCity</th>
-                        <th> HospitalContactNumber</th>
-                        <th> HospitalArea</th>
-                        <th> Actions</th>
-                    </tr>
-                    @foreach (var item in ViewData["ListValue"] as List<HospitalManagement.Hospital>)
-                    {
-                        <tr>
-                            <td> @item.HospitalId</td>
-                            <td> @item.HospitalName</td>
-                            <td> @item.HospitalSpeciality</td>
-                            <td> @item.HospitalAddress</td>
-                            <td> @item.HospialCity</td>
-                            <td> @item.HospitalContactNumber</td>
-                            <td> @item.HospitalArea</td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.HospitalId }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.HospitalId }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.HospitalId })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="HospitalAddress">Hospital Address:</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="HospitalAddress" name="HospitalAddress" value="" />
+                <span class="text-danger"></span>
+            </div>
         </div>
-    }
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="HospialCity">Hospital City:</label>
+            <div class="col-md-3">
+                <select class="form-control" id="HospialCity" name="HospialCity">
+                    <option value=""></option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Bhopal">Bhopal</option>
+                    <option value="Indore">Indore</option>
+                    <option value="Noida">Noida</option>
+                    <option value="Bangalore">Bangalore</option>
+                </select>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="HospitalContactNumber">Contact Number:</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="HospitalContactNumber" name="HospitalContactNumber" value="" />
+                <span class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="HospitalArea">Hospital Area:</label>
+            <div class="col-md-3">
+                <label class="checkbox-inline">
+                    <input type="radio" name="HospitalArea" value="Urban" checked> Urban
+                </label>
+                <label class="checkbox-inline">
+                    <input type="radio" name="HospitalArea" value="Rural"> Rural
+                </label>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="DateOfJoinin">Date of Joining:</label>
+            <div class="col-md-3">
+                <div class="input-group date" id="picker">
+                    <input type="text" class="form-control" id="DateOfJoinin" name="DateOfJoinin" value="" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <span class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" value="Save" class="btn btn-dark">Save</button> |
+                <a href="/Hospitals/Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row col-md-12">
+        <table class="table table-bordered table-hover">
+            <tbody>
+                <tr style="background-color:lightpink">
+                    <th> HospitalId</th>
+                    <th> HospitalName </th>
+                    <th> HospitalSpeciality</th>
+                    <th> HospitalAddress</th>
+                    <th> HospialCity</th>
+                    <th> HospitalContactNumber</th>
+                    <th> HospitalArea</th>
+                    <th> DateOfJoinin</th>
+                    <th> Actions</th>
+                </tr>
+                <tr style="background-color:lightcyan">
+                    <td> HospitalIdValue</td>
+                    <td> HospitalNameValue</td>
+                    <td> HospitalSpecialityValue</td>
+                    <td> HospitalAddressValue</td>
+                    <td> HospialCityValue</td>
+                    <td> HospitalContactNumberValue</td>
+                    <td> HospitalAreaValue</td>
+                    <td> DateOfJoininValue</td>
+                    <td>
+                        <a href="/Hospitals/Edit?id=HospitalIdValue">Edit</a> |
+                        <a href="/Hospitals/Details?id=HospitalIdValue">Details</a> |
+                        <a href="/Hospitals/Delete?id=HospitalIdValue">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button>
+        <a href="/Hospitals/Create">Create New</a>
+    </button>
+
     <script>
         function HospitalViewModel() {
             var self = this;
 
-            self.HospitalId = ko.observable("@Model.HospitalId"); // Assign the initial value from the server-side model
-            self.HospitalName = ko.observable("@Model.HospitalName"); // Assign the initial value from the server-side model
-            self.HospitalSpeciality = ko.observable("@Model.HospitalSpeciality");
-            self.HospitalAddress = ko.observable("@Model.HospitalAddress");
-            self.HospialCity = ko.observable("@Model.HospialCity");
-            self.HospitalContactNumber = ko.observable("@Model.HospitalContactNumber");
-            self.HospitalArea = ko.observable("@Model.HospitalArea");
+            self.HospitalId = ko.observable("");
+            self.HospitalName = ko.observable("");
+            self.HospitalSpeciality = ko.observable("");
+            self.HospitalAddress = ko.observable("");
+            self.HospialCity = ko.observable("");
+            self.HospitalContactNumber = ko.observable("");
+            self.HospitalArea = ko.observable("");
+            self.DateOfJoinin = ko.observable("");
 
             // Apply bindings
             ko.applyBindings(self);
         }
 
+        $(function () {
+            $('#picker').datetimepicker({
+                format: 'YYYY/MM/DD HH:mm:ss',
+                showClear: true,
+                useCurrent: false
+            });
+
+            $('#picker').on('dp.change', function (e) {
+                viewModel.DateOfJoinin(e.date.format('YYYY/MM/DD HH:mm:ss'));
+            });
+        });
         // Create view model instance
         var viewModel = new HospitalViewModel();
     </script>

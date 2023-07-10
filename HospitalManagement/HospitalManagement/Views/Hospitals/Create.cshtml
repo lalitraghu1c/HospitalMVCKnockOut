@@ -14,6 +14,15 @@
     <script src="~/Scripts/knockout-3.5.1.js"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+
 </head>
 <style>
     * {
@@ -44,7 +53,7 @@
     }
 </style>
 <body>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Create", "Hospitals", FormMethod.Post, new { @id = "HospitalForm", @name = "HospitalForm" }))
     {
         @Html.AntiForgeryToken()
         <div class="header">
@@ -85,7 +94,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.HospialCity, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.TextBoxFor(model => model.HospialCity, new { @class = "form-control", data_bind = "value: HospialCity" })
+                    @Html.DropDownListFor(model => model.HospialCity, new SelectList(new[] { "", "Hyderabad", "Delhi", "Bhopal", "Indore", "Noida", "Bangalore" }), new { @class = "form-control", data_bind = "value: HospialCity" })
                     @Html.ValidationMessageFor(model => model.HospialCity, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -113,17 +122,30 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.HospitalArea, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
-                    @Html.DropDownListFor(model => model.HospitalArea, new SelectList(new[] { "Urban", "Rural" }), new { @class = "form-control", data_bind = "value: HospitalArea" })
+                    @Html.DropDownListFor(model => model.HospitalArea, new SelectList(new[] { "", "Urban", "Rural" }), new { @class = "form-control", data_bind = "value: HospitalArea" })
                     @Html.ValidationMessageFor(model => model.HospitalArea, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
+                <div class="col-md-3">
+                    <label class="label-control" >Date Of Joining</label>
+                    <div class='input-group date' id='picker'>
+                        <input type='text' class="form-control" id="DateOfJoinin" name="DateOfJoinin" data-bind="value: DateOfJoinin" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.DateOfJoinin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" id="createButton" />
+                    <input type="submit" value="Create" onclick="return validateForm(this);" class="btn btn-dark" id="createButton" />
                 </div>
             </div>
         </div>
     }
+    <button>@Html.ActionLink("Back to List", "Index")</button><br />
 
 
     @{
@@ -133,29 +155,28 @@
     @if (listData.Count > 0)
     {
         <div class="row col-md-12">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-hover">
                 <tbody>
-
-                    <tr>
-                        <th> HospitalId </th>
+                    <tr style="background-color:lightpink">
                         <th> HospitalName </th>
                         <th> HospitalSpeciality</th>
                         <th> HospitalAddress</th>
                         <th> HospialCity</th>
                         <th> HospitalContactNumber</th>
                         <th> HospitalArea</th>
+                        <th> DateOfJoining</th>
                         <th> Actions</th>
                     </tr>
                     @foreach (var item in ViewData["ListValue"] as List<HospitalManagement.Hospital>)
                     {
-                        <tr>
-                            <td> @item.HospitalId</td>
+                        <tr style="background-color:lightcyan">
                             <td> @item.HospitalName</td>
                             <td> @item.HospitalSpeciality</td>
                             <td> @item.HospitalAddress</td>
                             <td> @item.HospialCity</td>
                             <td> @item.HospitalContactNumber</td>
                             <td> @item.HospitalArea</td>
+                            <td> @item.DateOfJoinin</td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { id = item.HospitalId }) |
                                 @Html.ActionLink("Details", "Details", new { id = item.HospitalId }) |
@@ -168,7 +189,8 @@
         </div>
     }
 
-    <script>
+    <script type="text/javascript">
+       
         function HospitalViewModel() {
             var self = this;
 
@@ -179,13 +201,34 @@
             self.HospialCity = ko.observable();
             self.HospitalContactNumber = ko.observable();
             self.HospitalArea = ko.observable();
-
+            self.DateOfJoinin = ko.observable();
+      
             // Apply bindings
             ko.applyBindings(self);
         }
 
         // Create view model instance
         var viewModel = new HospitalViewModel();
+
+        var validateForm = function () {
+            console.log($("#HospitalForm").serialize());
+            alert(viewModel.DateOfJoinin())
+            return true;
+        }
+
+        $(function () {
+            $('#picker').datetimepicker({
+                format: 'YYYY/MM/DD HH:mm:ss',
+                showClear: true,
+                useCurrent: false   
+            });
+
+            $('#picker').on('dp.change', function (e) {
+                viewModel.DateOfJoinin(e.date.format('YYYY/MM/DD HH:mm:ss'));
+            });
+        });
+        
     </script>
+
 </body>
 </html>

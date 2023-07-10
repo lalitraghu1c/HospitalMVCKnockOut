@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width" />
     <script src="~/Scripts/knockout-3.5.1.js"></script>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
     <title>Details</title>
 </head>
 <style>
@@ -52,41 +53,42 @@
             </div>
         </div>
         <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                Hospital Id
-            </dt>
-            <dd data-bind="text: HospitalId"></dd>
-            <dt>
-                Hospital Name
-            </dt>
-            <dd data-bind="text: HospitalName"></dd>
+        <div class="form-horizontal" style="width:28vw;height:40vh; display:flex; flex-direction:column;justify-content:space-between">
+            <div class="box" style="display:flex; flex-direction:row;justify-content:space-between">
+                <label>Hospital Name:</label>
+                <label data-bind="text: HospitalName"></label>
+            </div>
+            <div class="box" style="display:flex; flex-direction:row;justify-content:space-between">
 
-            <dt>
-                Hospital Speciality
-            </dt>
-            <dd data-bind="text: HospitalSpeciality"></dd>
+                <label>Hospital Speciality</label>
+                <label data-bind="text: HospitalSpeciality"></label>
+            </div>
+            <div class="box" style="display:flex; flex-direction:row;justify-content:space-between">
 
-            <dt>
-                Hospital Address
-            </dt>
-            <dd data-bind="text: HospitalAddress"></dd>
+                <label>Hospital Address</label>
+                <label data-bind="text: HospitalAddress"></label>
+            </div>
+            <div class="box" style="display:flex; flex-direction:row;justify-content:space-between">
 
-            <dt>
-                Hospital City
-            </dt>
-            <dd data-bind="text: HospialCity"></dd>
+                <label>Hospital City</label>
+                <label data-bind="text: HospialCity"></label>
+            </div>
+            <div class="box" style="display:flex; flex-direction:row;justify-content:space-between">
 
-            <dt>
-                Contact Number
-            </dt>
-            <dd data-bind="text: HospitalContactNumber"></dd>
+                <label>Contact Number</label>
+                <label data-bind="text: HospitalContactNumber"></label>
+            </div>
+            <div class="box" style="display:flex; flex-direction:row;justify-content:space-between">
 
-            <dt>
-                Hospital Area
-            </dt>
-            <dd data-bind="text: HospitalArea"></dd>
-        </dl>
+                <label>Hospital Area</label>
+                <label data-bind="text: HospitalArea"></label>
+            </div>
+            <div class="box" style="display:flex; flex-direction:row;justify-content:space-between">
+
+                <label>Date of Joinin</label>
+                <label data-bind="text: DateOfJoinin"></label>
+            </div>
+        </div>
     </div>
 
     <button>
@@ -102,10 +104,10 @@
     @if (listData.Count > 0)
     {
         <div class="row col-md-12">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-hover">
                 <tbody>
 
-                    <tr>
+                    <tr style="background-color:lightpink">
                         <th> HospitalId </th>
                         <th> HospitalName </th>
                         <th> HospitalSpeciality</th>
@@ -113,11 +115,12 @@
                         <th> HospialCity</th>
                         <th> HospitalContactNumber</th>
                         <th> HospitalArea</th>
+                        <th> DateOfJoinin</th>
                         <th> Actions</th>
                     </tr>
                     @foreach (var item in ViewData["ListValue"] as List<HospitalManagement.Hospital>)
                     {
-                        <tr>
+                        <tr style="background-color:lightcyan">
                             <td> @item.HospitalId</td>
                             <td> @item.HospitalName</td>
                             <td> @item.HospitalSpeciality</td>
@@ -125,6 +128,7 @@
                             <td> @item.HospialCity</td>
                             <td> @item.HospitalContactNumber</td>
                             <td> @item.HospitalArea</td>
+                            <td> @item.DateOfJoinin</td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { id = item.HospitalId }) |
                                 @Html.ActionLink("Details", "Details", new { id = item.HospitalId }) |
@@ -136,6 +140,9 @@
             </table>
         </div>
     }
+    <button>
+        @Html.ActionLink("Create New", "Create")
+    </button>
     <script>
         function HospitalViewModel() {
             var self = this;
@@ -148,7 +155,7 @@
             self.HospialCity = ko.observable("@Model.HospialCity");
             self.HospitalContactNumber = ko.observable("@Model.HospitalContactNumber");
             self.HospitalArea = ko.observable("@Model.HospitalArea");
-
+            self.DateOfJoinin = ko.observable("@Model.DateOfJoinin")
             // Apply bindings
             ko.applyBindings(self);
         }

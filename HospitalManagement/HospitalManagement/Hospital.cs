@@ -21,5 +21,6 @@ namespace HospitalManagement
         public string HospialCity { get; set; }
         public string HospitalContactNumber { get; set; }
         public string HospitalArea { get; set; }
+        public Nullable<System.DateTime> DateOfJoinin { get; set; }
     }
 }
